@@ -65,6 +65,11 @@ inline void mul_full(Bit * dest, const Bit * op1, const Bit * op2, int size) {
 		for (int k = 0; k < size-i; ++k)
 			temp[k] = op1[k] & op2[i];
 		add_full(sum+i, nullptr, sum+i, temp, nullptr, size-i);
+
+//for (int p=0; p<size; p++) {
+//    std::cout << sum[p].reveal<bool>() ? "1":"0";
+//}
+//std::cout << std::endl;
 	}
 	memcpy(dest, sum, sizeof(Bit)*size);
 	delete[] sum;

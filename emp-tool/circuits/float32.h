@@ -14,6 +14,16 @@
 #define SGNFC_LEN 23
 #define EXPNT_LEN 8
 
+#define OP_COUNTERS
+
+#ifdef OP_COUNTERS
+extern uint32_t num_additions;
+extern uint32_t num_subtractions;
+extern uint32_t num_multiplications;
+extern uint32_t num_divisions;
+#endif
+
+
 namespace emp {
 
 class Float: Swappable<Float> { public:
@@ -66,6 +76,7 @@ class Float: Swappable<Float> { public:
 	const Bit & operator[](int index) const;
 	size_t size() const {return 32;};
 };
+
 
 #include "emp-tool/circuits/float32.hpp"
 }

@@ -2,7 +2,14 @@
 using emp::Float;
 using emp::Bit;
 
+#ifdef OP_COUNTERS
+uint32_t num_multiplications = 0;
+#endif
+
 Float Float::operator*(const Float& rhs) const {
+#ifdef OP_COUNTERS
+    num_multiplications++;
+#endif
 	Float res(*this);
 	Bit *B = new Bit[8918];
 	memcpy(B, value.data(), sizeof(block)*32);

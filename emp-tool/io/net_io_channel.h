@@ -28,6 +28,13 @@ class NetIO: public IOChannel<NetIO> { public:
 	bool has_sent = false;
 	string addr;
 	int port;
+
+	// stats
+	uint64_t num_tx=0;
+	uint64_t num_rx=0;
+	uint64_t size_tx=0;
+	uint64_t size_rx=0;
+
 	NetIO(const char * address, int port, bool quiet = false) {
 		this->port = port & 0xFFFF;
 		is_server = (address == nullptr);
@@ -116,6 +123,8 @@ class NetIO: public IOChannel<NetIO> { public:
 
 	void send_data_internal(const void * data, int len) {
 		int sent = 0;
+		num_tx ++;
+        size_tx += len;
 		while(sent < len) {
 			int res = fwrite(sent + (char*)data, 1, len - sent, stream);
 			if (res >= 0)
@@ -127,6 +136,8 @@ class NetIO: public IOChannel<NetIO> { public:
 	}
 
 	void recv_data_internal(void  * data, int len) {
+		num_rx ++;
+        size_rx += len;
 		if(has_sent)
 			fflush(stream);
 		has_sent = false;
